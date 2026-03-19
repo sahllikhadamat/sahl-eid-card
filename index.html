@@ -5,38 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تصميم تهنئة عيد – سهل للخدمات</title>
 
+    <!-- خطوط عربية -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Cairo:wght@400;700&family=Amiri&family=Changa:wght@400;700&display=swap" rel="stylesheet">
+
     <style>
         body {
             margin: 0;
             font-family: "Tajawal", sans-serif;
-            background-color: #0a1a2f; /* كحلي */
+            background-color: #0a1a2f;
             color: white;
-            text-align: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* خلفية هندسية */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(255,140,40,0.15), transparent 60%),
+                radial-gradient(circle at 80% 70%, rgba(255,140,40,0.12), transparent 60%),
+                radial-gradient(circle at 50% 10%, rgba(0,150,255,0.10), transparent 70%),
+                linear-gradient(135deg, rgba(255,140,40,0.05) 0%, rgba(0,150,255,0.05) 100%);
+            z-index: -1;
         }
 
         /* الشريط العلوي */
         .header {
-            background-color: #f28c28; /* برتقالي */
-            padding: 20px;
+            background-color: #f28c28;
+            padding: 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .header img {
-            height: 90px; /* شعار كبير وواضح */
+            height: 95px;
             margin-left: 20px;
         }
 
         .header-title {
-            font-size: 26px;
+            font-size: 28px;
             font-weight: bold;
             margin-right: 20px;
         }
 
-        /* منطقة المحتوى */
         .container {
             margin-top: 30px;
+            text-align: center;
         }
 
         input {
@@ -48,7 +68,6 @@
             margin-bottom: 15px;
         }
 
-        /* أزرار */
         button {
             padding: 12px 20px;
             margin: 5px;
@@ -61,7 +80,6 @@
         .btn-orange { background-color: #f28c28; color: white; }
         .btn-blue { background-color: #0a1a2f; color: white; border: 2px solid #f28c28; }
 
-        /* ألوان الخط */
         .color-btn {
             width: 40px;
             height: 40px;
@@ -71,10 +89,10 @@
             cursor: pointer;
         }
 
-        /* منطقة المعاينة */
+        /* منطقة القالب */
         .preview-area {
             position: relative;
-            width: 320px;
+            width: 330px;
             margin: 20px auto;
         }
 
@@ -83,14 +101,16 @@
             border-radius: 10px;
         }
 
+        /* الاسم في أسفل الصفحة */
         .name-text {
-            position: absolute;
-            top: 50%;
+            position: fixed;
+            bottom: 60px;
             left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 28px;
+            transform: translateX(-50%);
+            font-size: 32px;
             font-weight: bold;
             pointer-events: none;
+            transition: left 0.2s ease;
         }
 
         /* حقوق */
@@ -108,7 +128,7 @@
     <!-- الشريط العلوي -->
     <div class="header">
         <div class="header-title">تصميم تهنئة عيد – سهل للخدمات</div>
-        <img src="IMAGE1.png" alt="شعار سهل للخدمات">
+        <img src="logo.png" alt="شعار سهل للخدمات">
     </div>
 
     <div class="container">
@@ -120,27 +140,36 @@
         <button class="color-btn" style="background:white" onclick="changeColor('white')"></button>
         <button class="color-btn" style="background:#e6d5b8" onclick="changeColor('#e6d5b8')"></button>
         <button class="color-btn" style="background:black" onclick="changeColor('black')"></button>
-        <button class="color-btn" style="background:gold" onclick="changeColor('gold')"></button>
+        <button class="color-btn" style="background:#4b2e19" onclick="changeColor('#4b2e19')"></button>
+        <button class="color-btn" style="background:#bba431" onclick="changeColor('#bba431')"></button>
+
+        <h3>اختر نوع الخط</h3>
+        <select id="fontSelect" onchange="changeFont()" style="padding:10px; border-radius:8px; font-size:18px;">
+            <option value="Tajawal">Tajawal</option>
+            <option value="Cairo">Cairo</option>
+            <option value="Amiri">Amiri</option>
+            <option value="Changa">Changa</option>
+        </select>
 
         <h3>حرّك الاسم</h3>
-        <button class="btn-orange" onclick="moveName(-10)">◀</button>
-        <button class="btn-orange" onclick="moveName(10)">▶</button>
+        <button class="btn-orange" onclick="moveName(-15)">◀</button>
+        <button class="btn-orange" onclick="moveName(15)">▶</button>
 
         <h3>اختر القالب</h3>
-        <button class="btn-blue" onclick="changeTemplate('IMAGE2.png')">قالب 1</button>
-        <button class="btn-blue" onclick="changeTemplate('IMAGE3.png')">قالب 2</button>
-        <button class="btn-blue" onclick="changeTemplate('IMAGE4.png')">قالب 3</button>
+        <button class="btn-blue" onclick="changeTemplate('template1.png')">قالب 1</button>
+        <button class="btn-blue" onclick="changeTemplate('template2.png')">قالب 2</button>
+        <button class="btn-blue" onclick="changeTemplate('template3.png')">قالب 3</button>
+        <button class="btn-blue" onclick="changeTemplate('template4.png')">قالب 4</button>
 
         <div class="preview-area">
-            <img id="template" src="IMAGE2.png">
-            <div id="nameText" class="name-text">اسمك هنا</div>
+            <img id="template" src="template1.png">
         </div>
-
-        <button class="btn-orange" onclick="generateCard()">إنشاء التهنئة</button>
 
         <p id="message" style="margin-top:20px; font-size:20px; font-weight:bold;"></p>
 
     </div>
+
+    <div class="name-text" id="nameText">اسمك هنا</div>
 
     <div class="footer">
         جميع الحقوق محفوظة لـ سهل للخدمات ©
@@ -148,7 +177,6 @@
 
 <script>
     let nameText = document.getElementById("nameText");
-    let template = document.getElementById("template");
 
     document.getElementById("username").addEventListener("input", function() {
         nameText.textContent = this.value || "اسمك هنا";
@@ -158,18 +186,19 @@
         nameText.style.color = color;
     }
 
+    function changeFont() {
+        let font = document.getElementById("fontSelect").value;
+        nameText.style.fontFamily = font;
+    }
+
+    let offset = 0;
     function moveName(value) {
-        let current = parseInt(nameText.style.left || "50%");
-        nameText.style.left = `calc(${current}% + ${value}px)`;
+        offset += value;
+        nameText.style.left = `calc(50% + ${offset}px)`;
     }
 
     function changeTemplate(img) {
-        template.src = img;
-    }
-
-    function generateCard() {
-        document.getElementById("message").textContent =
-            "كل عام وأنت بخير، شكرًا لاختيارك سهل للخدمات";
+        document.getElementById("template").src = img;
     }
 </script>
 
