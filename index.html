@@ -1,144 +1,176 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>تهنئة العيد - متجر سهل</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تصميم تهنئة عيد – سهل للخدمات</title>
 
-<!-- خط مشابه ل ZEYADAArabic1ExtraBold -->
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: "Tajawal", sans-serif;
+            background-color: #0a1a2f; /* كحلي */
+            color: white;
+            text-align: center;
+        }
 
-<style>
-    body {
-        font-family: "Cairo", sans-serif;
-        background: #f5f5f5;
-        text-align: center;
-        padding: 20px;
-    }
+        /* الشريط العلوي */
+        .header {
+            background-color: #f28c28; /* برتقالي */
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    h2 {
-        margin-bottom: 15px;
-        color: #008f6a;
-    }
+        .header img {
+            height: 90px; /* شعار كبير وواضح */
+            margin-left: 20px;
+        }
 
-    .templates {
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-        flex-wrap: wrap;
-        margin-bottom: 20px;
-    }
+        .header-title {
+            font-size: 26px;
+            font-weight: bold;
+            margin-right: 20px;
+        }
 
-    .templates img {
-        width: 180px;
-        height: auto;
-        border-radius: 10px;
-        cursor: pointer;
-        border: 3px solid transparent;
-        transition: 0.3s;
-    }
+        /* منطقة المحتوى */
+        .container {
+            margin-top: 30px;
+        }
 
-    .templates img.selected {
-        border-color: #008f6a;
-        transform: scale(1.05);
-    }
+        input {
+            padding: 12px;
+            width: 70%;
+            border-radius: 8px;
+            border: none;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
 
-    input {
-        padding: 12px;
-        width: 260px;
-        font-size: 18px;
-        margin-bottom: 20px;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        text-align: center;
-    }
+        /* أزرار */
+        button {
+            padding: 12px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+        }
 
-    button {
-        padding: 12px 25px;
-        background: #008f6a;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        font-size: 18px;
-        cursor: pointer;
-        margin-bottom: 20px;
-    }
+        .btn-orange { background-color: #f28c28; color: white; }
+        .btn-blue { background-color: #0a1a2f; color: white; border: 2px solid #f28c28; }
 
-    canvas {
-        margin-top: 25px;
-        display: none;
-        border-radius: 12px;
-        box-shadow: 0 0 10px #ccc;
-    }
-</style>
+        /* ألوان الخط */
+        .color-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        /* منطقة المعاينة */
+        .preview-area {
+            position: relative;
+            width: 320px;
+            margin: 20px auto;
+        }
+
+        .preview-area img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .name-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 28px;
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+        /* حقوق */
+        .footer {
+            margin-top: 40px;
+            padding: 15px;
+            font-size: 16px;
+            color: #ddd;
+        }
+    </style>
 </head>
 
 <body>
 
-<h2>اختر قالب التهنئة</h2>
+    <!-- الشريط العلوي -->
+    <div class="header">
+        <div class="header-title">تصميم تهنئة عيد – سهل للخدمات</div>
+        <img src="IMAGE1.png" alt="شعار سهل للخدمات">
+    </div>
 
-<div class="templates">
-    <img src="IMAGE1.png" onclick="selectTemplate(this, 0)">
-    <img src="IMAGE2.png" onclick="selectTemplate(this, 1)">
-    <img src="IMAGE3.png" onclick="selectTemplate(this, 2)">
-    <img src="IMAGE4.png" onclick="selectTemplate(this, 3)">
-</div>
+    <div class="container">
 
-<input type="text" id="nameInput" placeholder="اكتب اسمك هنا">
+        <h2>اكتب اسمك</h2>
+        <input type="text" id="username" placeholder="اكتب الاسم هنا">
 
-<br>
+        <h3>اختر لون الخط</h3>
+        <button class="color-btn" style="background:white" onclick="changeColor('white')"></button>
+        <button class="color-btn" style="background:#e6d5b8" onclick="changeColor('#e6d5b8')"></button>
+        <button class="color-btn" style="background:black" onclick="changeColor('black')"></button>
+        <button class="color-btn" style="background:gold" onclick="changeColor('gold')"></button>
 
-<button onclick="generateCard()">إنشاء التهنئة</button>
+        <h3>حرّك الاسم</h3>
+        <button class="btn-orange" onclick="moveName(-10)">◀</button>
+        <button class="btn-orange" onclick="moveName(10)">▶</button>
 
-<canvas id="finalCanvas"></canvas>
+        <h3>اختر القالب</h3>
+        <button class="btn-blue" onclick="changeTemplate('IMAGE2.png')">قالب 1</button>
+        <button class="btn-blue" onclick="changeTemplate('IMAGE3.png')">قالب 2</button>
+        <button class="btn-blue" onclick="changeTemplate('IMAGE4.png')">قالب 3</button>
+
+        <div class="preview-area">
+            <img id="template" src="IMAGE2.png">
+            <div id="nameText" class="name-text">اسمك هنا</div>
+        </div>
+
+        <button class="btn-orange" onclick="generateCard()">إنشاء التهنئة</button>
+
+        <p id="message" style="margin-top:20px; font-size:20px; font-weight:bold;"></p>
+
+    </div>
+
+    <div class="footer">
+        جميع الحقوق محفوظة لـ سهل للخدمات ©
+    </div>
 
 <script>
-let selectedIndex = null;
+    let nameText = document.getElementById("nameText");
+    let template = document.getElementById("template");
 
-function selectTemplate(img, index) {
-    document.querySelectorAll(".templates img").forEach(i => i.classList.remove("selected"));
-    img.classList.add("selected");
-    selectedIndex = index;
-}
+    document.getElementById("username").addEventListener("input", function() {
+        nameText.textContent = this.value || "اسمك هنا";
+    });
 
-function generateCard() {
-    if (selectedIndex === null) {
-        alert("الرجاء اختيار قالب");
-        return;
+    function changeColor(color) {
+        nameText.style.color = color;
     }
 
-    const name = document.getElementById("nameInput").value.trim();
-    if (name === "") {
-        alert("الرجاء كتابة الاسم");
-        return;
+    function moveName(value) {
+        let current = parseInt(nameText.style.left || "50%");
+        nameText.style.left = `calc(${current}% + ${value}px)`;
     }
 
-    const images = ["IMAGE1.png", "IMAGE2.png", "IMAGE3.png", "IMAGE4.png"];
-    const img = new Image();
-    img.src = images[selectedIndex];
+    function changeTemplate(img) {
+        template.src = img;
+    }
 
-    img.onload = function () {
-        const canvas = document.getElementById("finalCanvas");
-        const ctx = canvas.getContext("2d");
-
-        canvas.width = img.width;
-        canvas.height = img.height;
-
-        ctx.drawImage(img, 0, 0);
-
-        ctx.font = "700 48px 'Cairo'";
-        ctx.fillStyle = "#000";
-        ctx.textAlign = "center";
-
-        ctx.fillText(name, canvas.width / 2, canvas.height - 60);
-
-        canvas.style.display = "block";
-
-        const link = document.createElement("a");
-        link.download = "تهنئة_العيد.png";
-        link.href = canvas.toDataURL();
-        link.click();
-    };
-}
+    function generateCard() {
+        document.getElementById("message").textContent =
+            "كل عام وأنت بخير، شكرًا لاختيارك سهل للخدمات";
+    }
 </script>
 
 </body>
